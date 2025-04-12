@@ -1,1 +1,23 @@
+import telebot
 
+# 👉 Вставь сюда свой токен
+TOKEN = 'YOUR_BOT_TOKEN_HERE'
+bot = telebot.TeleBot(TOKEN)
+
+# Команда /start
+@bot.message_handler(commands=['start'])
+def start_message(message):
+    bot.send_message(message.chat.id, "Привет! Я твой бот на telebot. Напиши что-нибудь!")
+
+# Команда /help
+@bot.message_handler(commands=['help'])
+def help_message(message):
+    bot.send_message(message.chat.id, "Вот что я умею:\n/start — приветствие\n/help — помощь\nПросто напиши мне что-нибудь.")
+
+# Ответ на обычный текст
+@bot.message_handler(func=lambda message: True)
+def echo_all(message):
+    bot.send_message(message.chat.id, f"Ты написал: {message.text}")
+
+# Запуск бота
+bot.polling(non_stop=True)
